@@ -11,6 +11,7 @@ namespace WinterUniverse
 
         protected Vector2 _moveDirection;
         protected Vector2 _lookPoint;
+        protected bool _isAttacking;
 
         public PawnLocomotion PawnLocomotion => _pawnLocomotion;
         public PawnAnimator PawnAnimator => _pawnAnimator;
@@ -30,7 +31,7 @@ namespace WinterUniverse
         {
             _pawnLocomotion.HandleLocomotion(_moveDirection);
             _pawnAnimator.HandleRotation(_lookPoint);
-            _pawnCombat.HandleTargeting();
+            _pawnCombat.HandleTargeting(_isAttacking);
         }
     }
 }

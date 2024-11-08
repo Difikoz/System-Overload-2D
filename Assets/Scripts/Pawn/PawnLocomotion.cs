@@ -46,13 +46,15 @@ namespace WinterUniverse
                 _groundedTime -= Time.fixedDeltaTime;
             }
             _jumpTime -= Time.fixedDeltaTime;
-            if (_moveDirection != Vector2.zero)// && Mathf.Abs(_rb.linearVelocity.x) < _maxSpeed)
+            if (_moveDirection != Vector2.zero && Mathf.Abs(_rb.linearVelocity.x) < _maxSpeed)
             {
                 _rb.AddForce(_acceleration * _moveDirection.x * Vector2.right);
             }
             _pawn.PawnAnimator.SetBool("IsMoving", _rb.linearVelocityX != 0f);
-            _pawn.PawnAnimator.SetFloat("HorizontalVelocity", _rb.linearVelocityX * (_pawn.PawnAnimator.IsFacingRight ? 1f : -1f));
+            _pawn.PawnAnimator.SetBool("IsGrounded", _isGrounded);
+            _pawn.PawnAnimator.SetFloat("HorizontalVelocity", _rb.linearVelocityX * (_pawn.PawnAnimator.IsFacingRight ? 1f : -1f) / _maxSpeed);
             _pawn.PawnAnimator.SetFloat("VerticalVelocity", _rb.linearVelocityY);
+            _pawn.PawnAnimator.SetFloat("MoveSpeed", Mathf.Abs(_rb.linearVelocityX));
         }
 
         private void ApplyJumpForce()

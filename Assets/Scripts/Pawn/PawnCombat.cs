@@ -11,9 +11,17 @@ namespace WinterUniverse
             _pawn = GetComponentInParent<PawnController>();
         }
 
-        public void HandleTargeting()
+        public void HandleTargeting(bool isAttacking)
         {
-
+            if (isAttacking)
+            {
+                _pawn.PawnAnimator.SetBool("IsAttacking", true);
+                // fire
+            }
+            else
+            {
+                _pawn.PawnAnimator.SetBool("IsAttacking", false);
+            }
         }
     }
 }

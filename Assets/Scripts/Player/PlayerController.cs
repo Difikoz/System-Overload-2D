@@ -17,6 +17,16 @@ namespace WinterUniverse
             _cursorInput = value.Get<Vector2>();
         }
 
+        public void OnJump()
+        {
+            PawnLocomotion.Jump();
+        }
+
+        public void OnAttack(InputValue value)
+        {
+            _isAttacking = value.isPressed;
+        }
+
         protected override void Awake()
         {
             base.Awake();
