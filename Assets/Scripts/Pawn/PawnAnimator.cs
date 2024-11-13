@@ -42,11 +42,11 @@ namespace WinterUniverse
             //{
 
             //}
-            //_lookBone.rotation = Quaternion.Slerp(_lookBone.rotation, Quaternion.Euler(0f, 0f, _lookAngle), _lookSpeed * Time.fixedDeltaTime);
+            _lookBone.rotation = Quaternion.Slerp(_lookBone.rotation, Quaternion.Euler(0f, 0f, _lookAngle), _lookSpeed * Time.fixedDeltaTime);
             //_animator.transform.rotation = Quaternion.Slerp(_animator.transform.rotation, Quaternion.Euler(0f, 0f, 0f), _lookSpeed * Time.fixedDeltaTime);
             _isFacingRight = true;
             _animator.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            _lookBone.rotation = Quaternion.Euler(0f, 0f, _lookAngle);
+            //_lookBone.rotation = Quaternion.Euler(0f, 0f, _lookAngle);
         }
 
         private void FlipLeft()
@@ -55,11 +55,11 @@ namespace WinterUniverse
             //{
 
             //}
-            //_lookBone.rotation = Quaternion.Slerp(_lookBone.rotation, Quaternion.Euler(180f, 0f, -_lookAngle), _lookSpeed * Time.fixedDeltaTime);
+            _lookBone.rotation = Quaternion.Slerp(_lookBone.rotation, Quaternion.Euler(180f, 0f, -_lookAngle), _lookSpeed * Time.fixedDeltaTime);
             //_animator.transform.rotation = Quaternion.Slerp(_animator.transform.rotation, Quaternion.Euler(0f, 180f, 0f), _lookSpeed * Time.fixedDeltaTime);
             _isFacingRight = false;
             _animator.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            _lookBone.rotation = Quaternion.Euler(180f, 0f, -_lookAngle);
+            //_lookBone.rotation = Quaternion.Euler(180f, 0f, -_lookAngle);
         }
 
         public void SetFloat(string name, float value)
