@@ -19,7 +19,6 @@ namespace WinterUniverse
         private Vector2 _moveDirection;
         private float _jumpTime;
         private float _groundedTime;
-        private bool _isGrounded;
 
         public void Initialize()
         {
@@ -30,14 +29,14 @@ namespace WinterUniverse
         public void HandleLocomotion(Vector2 direction)
         {
             _moveDirection = direction;
-            if (_jumpTime > 0f && _groundedTime > 0f)
+            if (_pawn.CanJump && _jumpTime > 0f && _groundedTime > 0f)
             {
                 _jumpTime = 0f;
                 _groundedTime = 0f;
                 ApplyJumpForce();
             }
-            _isGrounded = _rb.linearVelocity.y <= 0f && Physics2D.OverlapBox(_groundOverlapPoint.position, _groundOverlapSize, 0f, _obstacleMask);
-            if (_isGrounded)
+            _pawn.IsGrounded = _rb.linearVelocity.y <= 0f && Physics2D.OverlapBox(_groundOverlapPoint.position, _groundOverlapSize, 0f, _obstacleMask);
+            if (_pawn.IsGrounded)
             {
                 _groundedTime = _timeToFall;
             }
@@ -46,12 +45,12 @@ namespace WinterUniverse
                 _groundedTime -= Time.fixedDeltaTime;
             }
             _jumpTime -= Time.fixedDeltaTime;
-            if (_moveDirection != Vector2.zero && Mathf.Abs(_rb.linearVelocity.x) < _maxSpeed)
+            if (_pawn.CanMove && _moveDirection.x != 0f && Mathf.Abs(_rb.linearVelocity.x) < _maxSpeed)
             {
                 _rb.AddForce(_acceleration * _moveDirection.x * Vector2.right);
             }
             _pawn.PawnAnimator.SetBool("IsMoving", _rb.linearVelocityX != 0f);
-            _pawn.PawnAnimator.SetBool("IsGrounded", _isGrounded);
+            _pawn.PawnAnimator.SetBool("IsGrounded", _pawn.IsGrounded);
             _pawn.PawnAnimator.SetFloat("HorizontalVelocity", _rb.linearVelocityX * (_pawn.PawnAnimator.IsFacingRight ? 1f : -1f) / _maxSpeed);
             _pawn.PawnAnimator.SetFloat("VerticalVelocity", _rb.linearVelocityY);
             _pawn.PawnAnimator.SetFloat("MoveSpeed", Mathf.Abs(_rb.linearVelocityX));

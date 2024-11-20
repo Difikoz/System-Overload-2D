@@ -5,6 +5,11 @@ namespace WinterUniverse
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class PawnController : MonoBehaviour
     {
+        public bool CanMove = true;
+        public bool CanRotate = true;
+        public bool CanJump = true;
+        public bool IsGrounded = true;
+
         private PawnLocomotion _pawnLocomotion;
         private PawnAnimator _pawnAnimator;
         private PawnCombat _pawnCombat;
@@ -31,7 +36,6 @@ namespace WinterUniverse
         {
             _pawnLocomotion.HandleLocomotion(_moveDirection);
             _pawnAnimator.HandleRotation(_lookPoint);
-            _pawnCombat.HandleTargeting(_isAttacking);
         }
     }
 }

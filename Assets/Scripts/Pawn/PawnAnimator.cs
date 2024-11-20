@@ -12,7 +12,6 @@ namespace WinterUniverse
         private bool _isFacingRight = true;
 
         [SerializeField] private Transform _lookBone;
-        [SerializeField] private float _lookSpeed = 180f;
 
         public bool IsFacingRight => _isFacingRight;
 
@@ -24,42 +23,34 @@ namespace WinterUniverse
 
         public void HandleRotation(Vector3 position)
         {
+            if (!_pawn.CanRotate)
+            {
+                return;
+            }
             _lookDirection = position - _lookBone.position;
             _lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
             if (_lookDirection.x < 0f)
             {
-                FlipLeft();
+                LookLeft();
             }
             else if (_lookDirection.x > 0f)
             {
-                FlipRight();
+                LookRight();
             }
         }
 
-        private void FlipRight()
+        private void LookRight()
         {
-            //if (!_isFacingRight)
-            //{
-
-            //}
-            _lookBone.rotation = Quaternion.Slerp(_lookBone.rotation, Quaternion.Euler(0f, 0f, _lookAngle), _lookSpeed * Time.fixedDeltaTime);
-            //_animator.transform.rotation = Quaternion.Slerp(_animator.transform.rotation, Quaternion.Euler(0f, 0f, 0f), _lookSpeed * Time.fixedDeltaTime);
             _isFacingRight = true;
             _animator.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            //_lookBone.rotation = Quaternion.Euler(0f, 0f, _lookAngle);
+            _lookBone.rotation = Quaternion.Euler(0f, 0f, _lookAngle);
         }
 
-        private void FlipLeft()
+        private void LookLeft()
         {
-            //if (_isFacingRight)
-            //{
-
-            //}
-            _lookBone.rotation = Quaternion.Slerp(_lookBone.rotation, Quaternion.Euler(180f, 0f, -_lookAngle), _lookSpeed * Time.fixedDeltaTime);
-            //_animator.transform.rotation = Quaternion.Slerp(_animator.transform.rotation, Quaternion.Euler(0f, 180f, 0f), _lookSpeed * Time.fixedDeltaTime);
             _isFacingRight = false;
             _animator.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            //_lookBone.rotation = Quaternion.Euler(180f, 0f, -_lookAngle);
+            _lookBone.rotation = Quaternion.Euler(180f, 0f, -_lookAngle);
         }
 
         public void SetFloat(string name, float value)
@@ -72,9 +63,12 @@ namespace WinterUniverse
             _animator.SetBool(name, value);
         }
 
-        public void SetTrigger(string name)// in future change to play action
+        public void PlayAction(string name, float fadeTime = 0.1f, bool canMove = false, bool canRotate = false, bool canJump = false)
         {
-            _animator.SetTrigger(name);
+            _pawn.CanMove = canMove;
+            _pawn.CanRotate = canRotate;
+            _pawn.CanJump = canJump;
+            _animator.CrossFade(name, fadeTime);
         }
     }
 }
