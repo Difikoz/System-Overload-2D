@@ -5,37 +5,30 @@ namespace WinterUniverse
 {
     public class PlayerController : PawnController
     {
-        private Vector2 _cursorInput;
-
         public void OnMove(InputValue value)
         {
-            _moveDirection = value.Get<Vector2>();
-        }
-
-        public void OnCursor(InputValue value)
-        {
-            _cursorInput = value.Get<Vector2>();
+            MoveDirection = value.Get<Vector2>();
         }
 
         public void OnJump()
         {
-            PawnLocomotion.Jump();
+            _pawnLocomotion.PerformJump();
         }
 
-        public void OnAttack(InputValue value)
+        public void OnAttack()
         {
-            _isAttacking = value.isPressed;
+
         }
 
         protected override void Awake()
         {
             base.Awake();
+            Invoke(nameof(LateStart), 0.25f);
         }
 
-        protected override void FixedUpdate()
+        private void LateStart()
         {
-            _lookPoint = Camera.main.ScreenToWorldPoint(_cursorInput);
-            base.FixedUpdate();
+            FindFirstObjectByType<CameraController>().SetTarget(transform, new(0f, 1f, 0f), 10f);
         }
     }
 }

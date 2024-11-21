@@ -2,40 +2,35 @@ using UnityEngine;
 
 namespace WinterUniverse
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PawnLocomotion : MonoBehaviour
     {
-        private PawnController _pawn;
-        private Rigidbody2D _rb;
-
-        [SerializeField] private float _acceleration = 20f;
-        [SerializeField] private float _maxSpeed = 10f;
-        [SerializeField] private float _jumpForce = 10f;
         [SerializeField] private float _timeToJump = 0.25f;
         [SerializeField] private float _timeToFall = 0.25f;
-        [SerializeField] private Transform _groundOverlapPoint;
-        [SerializeField] private Vector2 _groundOverlapSize;
-        [SerializeField] private LayerMask _obstacleMask;
+        [SerializeField] private Transform _groundCheckPoint;
+        [SerializeField] private Vector2 _groundCheckSize;
+        [SerializeField] private LayerMask _groundMask;
 
-        private Vector2 _moveDirection;
+        private PawnController _pawn;
+        private Rigidbody2D _rb;
         private float _jumpTime;
         private float _groundedTime;
 
         public void Initialize()
         {
-            _pawn = GetComponentInParent<PawnController>();
-            _rb = GetComponentInParent<Rigidbody2D>();
+            _pawn = GetComponent<PawnController>();
+            _rb = GetComponent<Rigidbody2D>();
         }
 
-        public void HandleLocomotion(Vector2 direction)
+        public void OnFixedUpdate()
         {
-            _moveDirection = direction;
             if (_pawn.CanJump && _jumpTime > 0f && _groundedTime > 0f)
             {
                 _jumpTime = 0f;
                 _groundedTime = 0f;
-                ApplyJumpForce();
+                _rb.AddForce(Vector2.up * _pawn.JumpForce, ForceMode2D.Impulse);
             }
-            _pawn.IsGrounded = _rb.linearVelocity.y <= 0f && Physics2D.OverlapBox(_groundOverlapPoint.position, _groundOverlapSize, 0f, _obstacleMask);
+            _pawn.IsGrounded = _rb.linearVelocityY <= 0f && Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0f, _groundMask);
             if (_pawn.IsGrounded)
             {
                 _groundedTime = _timeToFall;
@@ -45,34 +40,31 @@ namespace WinterUniverse
                 _groundedTime -= Time.fixedDeltaTime;
             }
             _jumpTime -= Time.fixedDeltaTime;
-            if (_pawn.CanMove && _moveDirection.x != 0f && Mathf.Abs(_rb.linearVelocity.x) < _maxSpeed)
+            if (_pawn.CanMove && _pawn.MoveDirection.x != 0f && Mathf.Abs(_rb.linearVelocityX) < _pawn.MaxSpeed)
             {
-                _rb.AddForce(_acceleration * _moveDirection.x * Vector2.right);
+                _rb.AddForce(Vector2.right * _pawn.MoveDirection.x * _pawn.Acceleration);
+                if (_pawn.IsFacingRight && _pawn.MoveDirection.x < 0f)
+                {
+                    _pawn.IsFacingRight = false;
+                    transform.localScale = new(-1f, 1f, 1f);
+                }
+                else if (!_pawn.IsFacingRight && _pawn.MoveDirection.x > 0f)
+                {
+                    _pawn.IsFacingRight = true;
+                    transform.localScale = new(1f, 1f, 1f);
+                }
             }
-            _pawn.PawnAnimator.SetBool("IsMoving", _rb.linearVelocityX != 0f);
+            _pawn.PawnAnimator.SetFloat("Velocity", Mathf.Abs(_rb.linearVelocityX));
             _pawn.PawnAnimator.SetBool("IsGrounded", _pawn.IsGrounded);
-            _pawn.PawnAnimator.SetFloat("HorizontalVelocity", _rb.linearVelocityX * (_pawn.PawnAnimator.IsFacingRight ? 1f : -1f) / _maxSpeed);
-            _pawn.PawnAnimator.SetFloat("VerticalVelocity", _rb.linearVelocityY);
-            _pawn.PawnAnimator.SetFloat("MoveSpeed", Mathf.Abs(_rb.linearVelocityX));
         }
 
-        private void ApplyJumpForce()
+        public void PerformJump()
         {
-            _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-        }
-
-        public void Jump()
-        {
-            _jumpTime = _timeToJump;
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_groundOverlapPoint != null)
+            if (!_pawn.CanJump)
             {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireCube(_groundOverlapPoint.position, _groundOverlapSize);
+                return;
             }
+            _jumpTime = _timeToJump;
         }
     }
 }

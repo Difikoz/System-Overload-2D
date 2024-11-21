@@ -2,21 +2,21 @@ using UnityEngine;
 
 namespace WinterUniverse
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     public abstract class PawnController : MonoBehaviour
     {
-        public bool CanMove = true;
-        public bool CanRotate = true;
-        public bool CanJump = true;
+        public Vector2 MoveDirection;
+        public float Acceleration = 8f;
+        public float MaxSpeed = 8f;
+        public float JumpForce = 8f;
         public bool IsGrounded = true;
+        public bool IsFacingRight = true;
+        public bool IsPerfomingAction;
+        public bool CanMove = true;
+        public bool CanJump = true;
 
-        private PawnLocomotion _pawnLocomotion;
-        private PawnAnimator _pawnAnimator;
-        private PawnCombat _pawnCombat;
-
-        protected Vector2 _moveDirection;
-        protected Vector2 _lookPoint;
-        protected bool _isAttacking;
+        protected PawnLocomotion _pawnLocomotion;
+        protected PawnAnimator _pawnAnimator;
+        protected PawnCombat _pawnCombat;
 
         public PawnLocomotion PawnLocomotion => _pawnLocomotion;
         public PawnAnimator PawnAnimator => _pawnAnimator;
@@ -24,9 +24,19 @@ namespace WinterUniverse
 
         protected virtual void Awake()
         {
+            GetComponents();
+            InitializeComponents();
+        }
+
+        protected virtual void GetComponents()
+        {
             _pawnLocomotion = GetComponentInChildren<PawnLocomotion>();
             _pawnAnimator = GetComponentInChildren<PawnAnimator>();
             _pawnCombat = GetComponentInChildren<PawnCombat>();
+        }
+
+        protected virtual void InitializeComponents()
+        {
             _pawnLocomotion.Initialize();
             _pawnAnimator.Initialize();
             _pawnCombat.Initialize();
@@ -34,8 +44,7 @@ namespace WinterUniverse
 
         protected virtual void FixedUpdate()
         {
-            _pawnLocomotion.HandleLocomotion(_moveDirection);
-            _pawnAnimator.HandleRotation(_lookPoint);
+            _pawnLocomotion.OnFixedUpdate();
         }
     }
 }
