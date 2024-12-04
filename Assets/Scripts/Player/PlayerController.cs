@@ -35,7 +35,7 @@ namespace WinterUniverse
 
         private void LateStart()
         {
-            FindFirstObjectByType<CameraController>().SetTarget(transform, new(0f, 0.5f, 0f), 5f);
+            FindFirstObjectByType<CameraController>().SetTarget(transform, new(0f, 1f, 0f), 5f);
         }
     }
 }

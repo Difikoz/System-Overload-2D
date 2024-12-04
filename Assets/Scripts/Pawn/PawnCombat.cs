@@ -41,7 +41,7 @@ namespace WinterUniverse
                     PawnController pawn = collider.GetComponentInParent<PawnController>();
                     if (pawn != null && !_damagedTargets.Contains(pawn) && pawn != _pawn && !pawn.IsDead)
                     {
-                        pawn.PawnStats.TakeDamage(_pawn.PawnStats.AttackDamage, _pawn);
+                        pawn.PawnStats.TakeDamage(_pawn.PawnStats.AttackDamage, _pawn.PawnStats.AttackPoise, _pawn);
                         _damagedTargets.Add(pawn);
                     }
                 }
