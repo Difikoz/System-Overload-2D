@@ -7,6 +7,8 @@ namespace WinterUniverse
     {
         [SerializeField] private float _timeToJump = 0.25f;
         [SerializeField] private float _timeToFall = 0.25f;
+        [SerializeField] private float _timeToDash = 0.25f;
+        [SerializeField] private float _dashCooldown = 2f;
         [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _maxFallSpeed = 25f;
         [SerializeField] private float _jumpGravityMultiplier = 1f;
@@ -25,9 +27,11 @@ namespace WinterUniverse
         private Rigidbody2D _rb;
         [Header("Visible For Debug")]
         [SerializeField] private float _movementVelocity;
+        [SerializeField] private float _dashVelocity;
         [SerializeField] private float _fallVelocity;
         [SerializeField] private float _jumpTime;
         [SerializeField] private float _groundedTime;
+        [SerializeField] private float _dashTime;
         [SerializeField] private int _jumpCount;
 
         public void Initialize()
@@ -56,7 +60,7 @@ namespace WinterUniverse
                 _fallVelocity = 0f;
                 _jumpCount = 0;
             }
-            else
+            else if (!_pawn.IsDashing)
             {
                 if (UnderRoof())
                 {
@@ -77,6 +81,10 @@ namespace WinterUniverse
 
         private void HandleMovement()
         {
+            if (_dashVelocity != 0f)
+            {
+                _dashVelocity = Mathf.MoveTowards(_dashVelocity, 0f, _pawn.PawnStats.DashForce / _timeToDash * Time.fixedDeltaTime);
+            }
             if (_pawn.CanMove && _pawn.MoveDirection.x != 0f)
             {
                 _movementVelocity = Mathf.MoveTowards(_movementVelocity, _pawn.MoveDirection.x * _pawn.PawnStats.MaxSpeed, _pawn.PawnStats.Acceleration * Time.fixedDeltaTime);
@@ -96,13 +104,15 @@ namespace WinterUniverse
             if (FacedToWall())
             {
                 _movementVelocity = 0f;
+                _dashVelocity = 0f;
             }
             _pawn.IsMoving = _movementVelocity != 0f;
+            _pawn.IsDashing = _dashVelocity != 0f;
         }
 
         private void HandleVelocity()
         {
-            _rb.linearVelocityX = _movementVelocity;
+            _rb.linearVelocityX = _movementVelocity + _dashVelocity;
             _rb.linearVelocityY = _fallVelocity;
         }
 
@@ -113,11 +123,11 @@ namespace WinterUniverse
 
         private bool FacedToWall()
         {
-            if (_pawn.IsFacingRight && _movementVelocity > 0f)
+            if (_pawn.IsFacingRight && (_movementVelocity > 0f || _dashVelocity > 0f))
             {
                 return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, _wallMask);
             }
-            else if (!_pawn.IsFacingRight && _movementVelocity < 0f)
+            else if (!_pawn.IsFacingRight && (_movementVelocity < 0f || _dashVelocity < 0f))
             {
                 return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, _wallMask);
             }
@@ -146,6 +156,20 @@ namespace WinterUniverse
             {
                 _fallVelocity /= 2f;
             }
+        }
+
+        public void PerformDash()
+        {
+            if (!_pawn.CanDash || Time.time < _dashTime + _dashCooldown)
+            {
+                return;
+            }
+            _dashTime = Time.time;
+            _movementVelocity = 0f;
+            _fallVelocity = 0f;
+            _dashVelocity = transform.localScale.x * _pawn.PawnStats.DashForce;
+            _pawn.IsDashing = true;
+            _pawn.PawnAnimator.PlayAction("Dash");
         }
 
         private void ApplyJumpForce()

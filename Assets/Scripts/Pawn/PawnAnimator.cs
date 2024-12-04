@@ -18,6 +18,7 @@ namespace WinterUniverse
         {
             _animator.SetBool("IsGrounded", _pawn.IsGrounded);
             _animator.SetBool("IsMoving", _pawn.IsMoving);
+            _animator.SetBool("IsDashing", _pawn.IsDashing);
         }
 
         public void SetFloat(string name, float value)
@@ -30,11 +31,12 @@ namespace WinterUniverse
             _animator.SetBool(name, value);
         }
 
-        public void PlayAction(string name, float fadeTime = 0f, bool isPerfomingAction = true, bool canMove = false, bool canJump = false)
+        public void PlayAction(string name, float fadeTime = 0f, bool isPerfomingAction = true, bool canMove = false, bool canJump = false, bool canDash = false)
         {
             _pawn.IsPerfomingAction = isPerfomingAction;
             _pawn.CanMove = canMove;
             _pawn.CanJump = canJump;
+            _pawn.CanDash = canDash;
             _animator.CrossFade(name, fadeTime);
         }
     }

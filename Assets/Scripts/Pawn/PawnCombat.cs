@@ -9,6 +9,8 @@ namespace WinterUniverse
         [SerializeField] private Transform _attackPoint;
         [SerializeField] private Vector2 _attackSize;
         [SerializeField] private LayerMask _damageableMask;
+        [SerializeField] private Transform _bloodSpawnPoint;
+        [SerializeField] private GameObject _bloodEffect;
 
         protected PawnController _pawn;
         protected PawnController _target;
@@ -30,6 +32,12 @@ namespace WinterUniverse
             }
         }
 
+        public void SpawnBlood()
+        {
+            GameObject effect = Instantiate(_bloodEffect, _bloodSpawnPoint.position, Quaternion.identity);
+            Destroy(effect, 10f);
+        }
+
         public void PerformAttack()// called from animation event (!!!)
         {
             _attackEffect.SetActive(true);
@@ -41,7 +49,7 @@ namespace WinterUniverse
                     PawnController pawn = collider.GetComponentInParent<PawnController>();
                     if (pawn != null && !_damagedTargets.Contains(pawn) && pawn != _pawn && !pawn.IsDead)
                     {
-                        pawn.PawnStats.TakeDamage(_pawn.PawnStats.AttackDamage, _pawn.PawnStats.AttackPoise, _pawn);
+                        pawn.PawnStats.TakeDamage(_pawn.PawnStats.AttackDamage, _pawn.PawnStats.AttackPoise, true, _pawn);
                         _damagedTargets.Add(pawn);
                     }
                 }

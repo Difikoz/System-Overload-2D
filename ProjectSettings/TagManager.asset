@@ -39,8 +39,20 @@ TagManager:
   - 
   - WorldSpaceUI
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2879541411
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Character
+    uniqueID: 3214233119
+    locked: 0
+  - name: Particle
+    uniqueID: 3208829477
+    locked: 0
+  - name: Foreground
+    uniqueID: 2557300479
     locked: 0
   m_RenderingLayers:
   - Default

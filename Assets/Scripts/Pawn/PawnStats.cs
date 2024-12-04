@@ -10,6 +10,7 @@ namespace WinterUniverse
         public float Acceleration = 8f;
         public float Deceleration = 16f;
         public float MaxSpeed = 4f;
+        public float DashForce = 16f;
         public float JumpForce = 8f;
         public int JumpCount = 1;
         public float AttackDamage = 10f;
@@ -65,7 +66,7 @@ namespace WinterUniverse
             }
         }
 
-        public void TakeDamage(float damage, float poise, PawnController source = null)
+        public void TakeDamage(float damage, float poise, bool spawnBlood = true, PawnController source = null)
         {
             if (_pawn.IsDead)
             {
@@ -76,10 +77,14 @@ namespace WinterUniverse
             Poise = Mathf.Clamp(Poise + poise, 0f, PoiseMax);
             if (Health <= 0f)
             {
-                _pawn.Die(source);
+                _pawn.Die(spawnBlood, source);
             }
             else
             {
+                if (spawnBlood)
+                {
+                    _pawn.PawnCombat.SpawnBlood();
+                }
                 if (Poise >= PoiseMax)
                 {
                     BreakPoise();

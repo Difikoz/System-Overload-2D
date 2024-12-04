@@ -22,6 +22,11 @@ namespace WinterUniverse
             }
         }
 
+        public void OnDash()
+        {
+            _pawnLocomotion.PerformDash();
+        }
+
         public void OnAttack(InputValue value)
         {
             IsAttacking = value.isPressed;

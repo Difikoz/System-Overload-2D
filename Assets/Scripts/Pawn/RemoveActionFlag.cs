@@ -9,6 +9,7 @@ namespace WinterUniverse
         [SerializeField] private bool _removeIsPerfoming = true;
         [SerializeField] private bool _restoreCanMove = true;
         [SerializeField] private bool _restoreCanJump = true;
+        [SerializeField] private bool _restoreCanDash = true;
 
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -24,6 +25,10 @@ namespace WinterUniverse
             if (_restoreCanJump)
             {
                 _pawn.CanJump = true;
+            }
+            if (_restoreCanDash)
+            {
+                _pawn.CanDash = true;
             }
         }
     }

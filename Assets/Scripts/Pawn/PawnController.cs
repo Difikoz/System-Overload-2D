@@ -10,11 +10,13 @@ namespace WinterUniverse
         public Vector2 MoveDirection;
         public bool IsGrounded = true;
         public bool IsMoving;
+        public bool IsDashing;
         public bool IsAttacking;
         public bool IsFacingRight = true;
         public bool IsPerfomingAction;
         public bool CanMove = true;
         public bool CanJump = true;
+        public bool CanDash = true;
         public bool IsDead;
 
         protected PawnAnimator _pawnAnimator;
@@ -80,11 +82,15 @@ namespace WinterUniverse
             _pawnUI.Canvas.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         }
 
-        public void Die(PawnController source = null)
+        public void Die(bool spawnBlood = true, PawnController source = null)
         {
             if (IsDead)
             {
                 return;
+            }
+            if (spawnBlood)
+            {
+                _pawnCombat.SpawnBlood();
             }
             _pawnStats.Health = 0f;
             _pawnStats.OnHealthChanged?.Invoke(_pawnStats.Health, _pawnStats.HealthMax);
