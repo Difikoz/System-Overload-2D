@@ -5,11 +5,6 @@ namespace WinterUniverse
     public abstract class PawnController : MonoBehaviour
     {
         public Vector2 MoveDirection;
-        public float Acceleration = 8f;
-        public float Deceleration = 16f;
-        public float MaxSpeed = 4f;
-        public float JumpForce = 8f;
-        public int JumpCount = 1;
         public bool IsGrounded = true;
         public bool IsMoving;
         public bool IsAttacking;
@@ -19,13 +14,15 @@ namespace WinterUniverse
         public bool CanJump = true;
         public bool IsDead;
 
-        protected PawnLocomotion _pawnLocomotion;
         protected PawnAnimator _pawnAnimator;
         protected PawnCombat _pawnCombat;
+        protected PawnLocomotion _pawnLocomotion;
+        protected PawnStats _pawnStats;
 
-        public PawnLocomotion PawnLocomotion => _pawnLocomotion;
         public PawnAnimator PawnAnimator => _pawnAnimator;
         public PawnCombat PawnCombat => _pawnCombat;
+        public PawnLocomotion PawnLocomotion => _pawnLocomotion;
+        public PawnStats PawnStats => _pawnStats;
 
         protected virtual void Awake()
         {
@@ -35,16 +32,18 @@ namespace WinterUniverse
 
         protected virtual void GetComponents()
         {
-            _pawnLocomotion = GetComponentInChildren<PawnLocomotion>();
-            _pawnAnimator = GetComponentInChildren<PawnAnimator>();
-            _pawnCombat = GetComponentInChildren<PawnCombat>();
+            _pawnAnimator = GetComponent<PawnAnimator>();
+            _pawnCombat = GetComponent<PawnCombat>();
+            _pawnLocomotion = GetComponent<PawnLocomotion>();
+            _pawnStats = GetComponent<PawnStats>();
         }
 
         protected virtual void InitializeComponents()
         {
-            _pawnLocomotion.Initialize();
             _pawnAnimator.Initialize();
             _pawnCombat.Initialize();
+            _pawnLocomotion.Initialize();
+            _pawnStats.Initialize();
         }
 
         protected virtual void FixedUpdate()
@@ -52,9 +51,10 @@ namespace WinterUniverse
             _pawnLocomotion.OnFixedUpdate();
             _pawnAnimator.OnFixedUpdate();
             _pawnCombat.OnFixedUpdate();
+            _pawnStats.OnFixedUpdate();
         }
 
-        public void Die()
+        public void Die(PawnController source = null)
         {
             if (IsDead)
             {

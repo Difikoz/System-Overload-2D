@@ -1,17 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace WinterUniverse
 {
     public class PawnCombat : MonoBehaviour
     {
+        [SerializeField] private GameObject _attackEffect;
+        [SerializeField] private Transform _attackPoint;
+        [SerializeField] private Vector2 _attackSize;
+        [SerializeField] private LayerMask _damageableMask;
+
         protected PawnController _pawn;
         protected PawnController _target;
+        private List<PawnController> _damagedTargets = new();
 
         public PawnController Target => _target;
 
         public virtual void Initialize()
         {
             _pawn = GetComponent<PawnController>();
+            _attackEffect.SetActive(false);
         }
 
         public void OnFixedUpdate()
@@ -20,6 +28,30 @@ namespace WinterUniverse
             {
                 _pawn.PawnAnimator.PlayAction("Attack");
             }
+        }
+
+        public void PerformAttack()// called from animation event (!!!)
+        {
+            _attackEffect.SetActive(true);
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(_attackPoint.position, _attackSize, 0f, _damageableMask);
+            if (colliders.Length > 0)
+            {
+                foreach (Collider2D collider in colliders)
+                {
+                    PawnController pawn = collider.GetComponentInParent<PawnController>();
+                    if (pawn != null && !_damagedTargets.Contains(pawn) && pawn != _pawn && !pawn.IsDead)
+                    {
+                        pawn.PawnStats.TakeDamage(_pawn.PawnStats.AttackDamage, _pawn);
+                        _damagedTargets.Add(pawn);
+                    }
+                }
+            }
+        }
+
+        public void CompleteAttack()// called from animation event (!!!)
+        {
+            _attackEffect.SetActive(false);
+            _damagedTargets.Clear();
         }
 
         public virtual void SetTarget(PawnController target)
@@ -31,6 +63,15 @@ namespace WinterUniverse
             else
             {
                 _target = null;
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_attackPoint != null)
+            {
+                Gizmos.color = Color.magenta;
+                Gizmos.DrawWireCube(_attackPoint.position, _attackSize);
             }
         }
     }

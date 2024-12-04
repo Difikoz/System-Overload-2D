@@ -79,7 +79,7 @@ namespace WinterUniverse
         {
             if (_pawn.CanMove && _pawn.MoveDirection.x != 0f)
             {
-                _movementVelocity = Mathf.MoveTowards(_movementVelocity, _pawn.MoveDirection.x * _pawn.MaxSpeed, _pawn.Acceleration * Time.fixedDeltaTime);
+                _movementVelocity = Mathf.MoveTowards(_movementVelocity, _pawn.MoveDirection.x * _pawn.PawnStats.MaxSpeed, _pawn.PawnStats.Acceleration * Time.fixedDeltaTime);
                 if (_pawn.IsFacingRight && _pawn.MoveDirection.x < 0f)
                 {
                     _pawn.IsFacingRight = false;
@@ -93,7 +93,7 @@ namespace WinterUniverse
             }
             else
             {
-                _movementVelocity = Mathf.MoveTowards(_movementVelocity, 0f, _pawn.Deceleration * Time.fixedDeltaTime);
+                _movementVelocity = Mathf.MoveTowards(_movementVelocity, 0f, _pawn.PawnStats.Deceleration * Time.fixedDeltaTime);
             }
             if (FacedToWall())
             {
@@ -128,7 +128,7 @@ namespace WinterUniverse
 
         public void StartJumping()
         {
-            if (!_pawn.CanJump || _jumpCount >= _pawn.JumpCount)
+            if (!_pawn.CanJump || _jumpCount >= _pawn.PawnStats.JumpCount)
             {
                 return;
             }
@@ -155,7 +155,7 @@ namespace WinterUniverse
             _jumpCount++;
             _jumpTime = 0f;
             _groundedTime = 0f;
-            _fallVelocity = _pawn.JumpForce;
+            _fallVelocity = _pawn.PawnStats.JumpForce;
         }
 
         private void OnDrawGizmos()
