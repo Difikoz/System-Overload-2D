@@ -12,7 +12,7 @@ namespace WinterUniverse
 
         public void OnJump(InputValue value)
         {
-            if(value.isPressed)
+            if (value.isPressed)
             {
                 _pawnLocomotion.StartJumping();
             }
@@ -22,9 +22,9 @@ namespace WinterUniverse
             }
         }
 
-        public void OnAttack()
+        public void OnAttack(InputValue value)
         {
-
+            IsAttacking = value.isPressed;
         }
 
         protected override void Awake()

@@ -16,7 +16,10 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
-
+            if (_pawn.IsAttacking && !_pawn.IsPerfomingAction)
+            {
+                _pawn.PawnAnimator.PlayAction("Attack");
+            }
         }
 
         public virtual void SetTarget(PawnController target)

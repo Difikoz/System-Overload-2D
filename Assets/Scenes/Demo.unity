@@ -981,13 +981,15 @@ MonoBehaviour:
   Acceleration: 8
   Deceleration: 16
   MaxSpeed: 4
-  JumpForce: 12
+  JumpForce: 8
+  JumpCount: 2
   IsGrounded: 1
   IsMoving: 0
   IsFacingRight: 1
   IsPerfomingAction: 0
   CanMove: 1
   CanJump: 1
+  IsDead: 0
 --- !u!4 &966653437
 Transform:
   m_ObjectHideFlags: 0
@@ -1090,6 +1092,7 @@ MonoBehaviour:
   _fallVelocity: 0
   _jumpTime: 0
   _groundedTime: 0
+  _jumpCount: 0
 --- !u!70 &966653444
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1816,6 +1819,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4984a38b527a62a408361a8bf4ce5033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &8462660218615663229
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920215011367267099, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4678561321169267468, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
+      propertyPath: m_Name
+      value: Trap Death
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7ac0c2e434386bd408945f836b89987c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1830,3 +1890,4 @@ SceneRoots:
   - {fileID: 424777118}
   - {fileID: 118903308}
   - {fileID: 1569955170}
+  - {fileID: 8462660218615663229}

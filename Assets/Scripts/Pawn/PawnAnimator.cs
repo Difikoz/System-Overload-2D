@@ -30,7 +30,7 @@ namespace WinterUniverse
             _animator.SetBool(name, value);
         }
 
-        public void PlayAction(string name, float fadeTime = 0.1f, bool isPerfomingAction = true, bool canMove = false, bool canJump = false)
+        public void PlayAction(string name, float fadeTime = 0f, bool isPerfomingAction = true, bool canMove = false, bool canJump = false)
         {
             _pawn.IsPerfomingAction = isPerfomingAction;
             _pawn.CanMove = canMove;

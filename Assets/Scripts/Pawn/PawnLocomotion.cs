@@ -28,6 +28,7 @@ namespace WinterUniverse
         [SerializeField] private float _fallVelocity;
         [SerializeField] private float _jumpTime;
         [SerializeField] private float _groundedTime;
+        [SerializeField] private int _jumpCount;
 
         public void Initialize()
         {
@@ -46,15 +47,14 @@ namespace WinterUniverse
         {
             if (_pawn.CanJump && _jumpTime > 0f && _groundedTime > 0f)
             {
-                _jumpTime = 0f;
-                _groundedTime = 0f;
-                _fallVelocity = _pawn.JumpForce;
+                ApplyJumpForce();
             }
             _pawn.IsGrounded = _fallVelocity <= 0f && Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0f, _groundMask);
             if (_pawn.IsGrounded)
             {
                 _groundedTime = _timeToFall;
                 _fallVelocity = 0f;
+                _jumpCount = 0;
             }
             else
             {
@@ -128,11 +128,18 @@ namespace WinterUniverse
 
         public void StartJumping()
         {
-            if (!_pawn.CanJump)
+            if (!_pawn.CanJump || _jumpCount >= _pawn.JumpCount)
             {
                 return;
             }
-            _jumpTime = _timeToJump;
+            if (_jumpCount == 0)
+            {
+                _jumpTime = _timeToJump;
+            }
+            else
+            {
+                ApplyJumpForce();
+            }
         }
 
         public void StopJumping()
@@ -141,6 +148,14 @@ namespace WinterUniverse
             {
                 _fallVelocity /= 2f;
             }
+        }
+
+        private void ApplyJumpForce()
+        {
+            _jumpCount++;
+            _jumpTime = 0f;
+            _groundedTime = 0f;
+            _fallVelocity = _pawn.JumpForce;
         }
 
         private void OnDrawGizmos()

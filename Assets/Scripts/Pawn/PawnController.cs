@@ -9,12 +9,15 @@ namespace WinterUniverse
         public float Deceleration = 16f;
         public float MaxSpeed = 4f;
         public float JumpForce = 8f;
+        public int JumpCount = 1;
         public bool IsGrounded = true;
         public bool IsMoving;
+        public bool IsAttacking;
         public bool IsFacingRight = true;
         public bool IsPerfomingAction;
         public bool CanMove = true;
         public bool CanJump = true;
+        public bool IsDead;
 
         protected PawnLocomotion _pawnLocomotion;
         protected PawnAnimator _pawnAnimator;
@@ -49,6 +52,22 @@ namespace WinterUniverse
             _pawnLocomotion.OnFixedUpdate();
             _pawnAnimator.OnFixedUpdate();
             _pawnCombat.OnFixedUpdate();
+        }
+
+        public void Die()
+        {
+            if (IsDead)
+            {
+                return;
+            }
+            IsDead = true;
+            _pawnAnimator.PlayAction("Death");
+            PerformDeath();
+        }
+
+        protected virtual void PerformDeath()
+        {
+            Destroy(gameObject, 5f);
         }
     }
 }
