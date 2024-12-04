@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace WinterUniverse
 {
     public class PawnStats : MonoBehaviour
     {
+        public Action<float, float> OnHealthChanged;
+
         public float Acceleration = 8f;
         public float Deceleration = 16f;
         public float MaxSpeed = 4f;
@@ -26,6 +29,7 @@ namespace WinterUniverse
         public void Initialize()
         {
             _pawn = GetComponent<PawnController>();
+            OnHealthChanged?.Invoke(Health, HealthMax);
         }
 
         public void OnFixedUpdate()
@@ -60,6 +64,10 @@ namespace WinterUniverse
             {
                 _pawn.Die(source);
             }
+            else
+            {
+                OnHealthChanged?.Invoke(Health, HealthMax);
+            }
         }
 
         public void RestoreHealth(float value)
@@ -69,6 +77,7 @@ namespace WinterUniverse
                 return;
             }
             Health = Mathf.Clamp(Health + value, 0f, HealthMax);
+            OnHealthChanged?.Invoke(Health, HealthMax);
         }
     }
 }

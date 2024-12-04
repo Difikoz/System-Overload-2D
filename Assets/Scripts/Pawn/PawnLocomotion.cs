@@ -82,13 +82,11 @@ namespace WinterUniverse
                 _movementVelocity = Mathf.MoveTowards(_movementVelocity, _pawn.MoveDirection.x * _pawn.PawnStats.MaxSpeed, _pawn.PawnStats.Acceleration * Time.fixedDeltaTime);
                 if (_pawn.IsFacingRight && _pawn.MoveDirection.x < 0f)
                 {
-                    _pawn.IsFacingRight = false;
-                    transform.localScale = new(-1f, 1f, 1f);
+                    _pawn.FlipLeft();
                 }
                 else if (!_pawn.IsFacingRight && _pawn.MoveDirection.x > 0f)
                 {
-                    _pawn.IsFacingRight = true;
-                    transform.localScale = new(1f, 1f, 1f);
+                    _pawn.FlipRight();
                 }
             }
             else
