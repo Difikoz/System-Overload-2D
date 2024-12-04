@@ -10,9 +10,16 @@ namespace WinterUniverse
             MoveDirection = value.Get<Vector2>();
         }
 
-        public void OnJump()
+        public void OnJump(InputValue value)
         {
-            _pawnLocomotion.PerformJump();
+            if(value.isPressed)
+            {
+                _pawnLocomotion.StartJumping();
+            }
+            else
+            {
+                _pawnLocomotion.StopJumping();
+            }
         }
 
         public void OnAttack()
@@ -28,7 +35,7 @@ namespace WinterUniverse
 
         private void LateStart()
         {
-            FindFirstObjectByType<CameraController>().SetTarget(transform, new(0f, 1f, 0f), 10f);
+            FindFirstObjectByType<CameraController>().SetTarget(transform, new(0f, 0.5f, 0f), 5f);
         }
     }
 }

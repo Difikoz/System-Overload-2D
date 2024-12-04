@@ -6,9 +6,11 @@ namespace WinterUniverse
     {
         public Vector2 MoveDirection;
         public float Acceleration = 8f;
-        public float MaxSpeed = 8f;
+        public float Deceleration = 16f;
+        public float MaxSpeed = 4f;
         public float JumpForce = 8f;
         public bool IsGrounded = true;
+        public bool IsMoving;
         public bool IsFacingRight = true;
         public bool IsPerfomingAction;
         public bool CanMove = true;
@@ -45,6 +47,8 @@ namespace WinterUniverse
         protected virtual void FixedUpdate()
         {
             _pawnLocomotion.OnFixedUpdate();
+            _pawnAnimator.OnFixedUpdate();
+            _pawnCombat.OnFixedUpdate();
         }
     }
 }

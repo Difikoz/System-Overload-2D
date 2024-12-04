@@ -8,10 +8,16 @@ namespace WinterUniverse
         protected PawnController _pawn;
         protected Animator _animator;
 
-        public virtual void Initialize()
+        public void Initialize()
         {
             _pawn = GetComponent<PawnController>();
             _animator = GetComponent<Animator>();
+        }
+
+        public void OnFixedUpdate()
+        {
+            _animator.SetBool("IsGrounded", _pawn.IsGrounded);
+            _animator.SetBool("IsMoving", _pawn.IsMoving);
         }
 
         public void SetFloat(string name, float value)
