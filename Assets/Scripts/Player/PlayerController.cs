@@ -31,16 +31,5 @@ namespace WinterUniverse
         {
             IsAttacking = value.isPressed;
         }
-
-        protected override void Awake()
-        {
-            base.Awake();
-            Invoke(nameof(LateStart), 0.25f);
-        }
-
-        private void LateStart()
-        {
-            FindFirstObjectByType<CameraController>().SetTarget(transform, new(0f, 1f, 0f), 5f);
-        }
     }
 }

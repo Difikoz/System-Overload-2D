@@ -7,16 +7,17 @@ namespace WinterUniverse
     {
         public Action OnDied;
 
+        public string PawnName = "Faceless";
         public Vector2 MoveDirection;
-        public bool IsGrounded = true;
+        public bool IsGrounded;
         public bool IsMoving;
         public bool IsDashing;
         public bool IsAttacking;
-        public bool IsFacingRight = true;
+        public bool IsFacingRight;
         public bool IsPerfomingAction;
-        public bool CanMove = true;
-        public bool CanJump = true;
-        public bool CanDash = true;
+        public bool CanMove;
+        public bool CanJump;
+        public bool CanDash;
         public bool IsDead;
 
         protected PawnAnimator _pawnAnimator;
@@ -31,7 +32,7 @@ namespace WinterUniverse
         public PawnStats PawnStats => _pawnStats;
         public PawnUI PawnUI => _pawnUI;
 
-        protected virtual void Awake()
+        public virtual void Initialize()
         {
             GetComponents();
             InitializeComponents();
@@ -43,11 +44,20 @@ namespace WinterUniverse
             _pawnCombat = GetComponent<PawnCombat>();
             _pawnLocomotion = GetComponent<PawnLocomotion>();
             _pawnStats = GetComponent<PawnStats>();
-            _pawnUI = GetComponent<PawnUI>();
+            _pawnUI = GetComponentInChildren<PawnUI>();
         }
 
         protected virtual void InitializeComponents()
         {
+            IsGrounded = true;
+            IsMoving = false;
+            IsDashing = false;
+            IsAttacking = false;
+            IsPerfomingAction = false;
+            CanMove = true;
+            CanJump = true;
+            CanDash = true;
+            IsDead = false;
             _pawnAnimator.Initialize();
             _pawnCombat.Initialize();
             _pawnLocomotion.Initialize();
@@ -55,12 +65,12 @@ namespace WinterUniverse
             _pawnUI.Initialize();
         }
 
-        protected virtual void OnDespawn()
+        public virtual void Despawn()
         {
             _pawnUI.OnDespawn();
         }
 
-        protected virtual void FixedUpdate()
+        public virtual void OnFixedUpdate()
         {
             _pawnLocomotion.OnFixedUpdate();
             _pawnAnimator.OnFixedUpdate();
@@ -102,7 +112,7 @@ namespace WinterUniverse
 
         protected virtual void PerformDeath()
         {
-            Destroy(gameObject, 5f);
+
         }
     }
 }

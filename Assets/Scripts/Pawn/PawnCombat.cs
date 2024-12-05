@@ -22,6 +22,7 @@ namespace WinterUniverse
         {
             _pawn = GetComponent<PawnController>();
             _attackEffect.SetActive(false);
+            SetTarget(null);
         }
 
         public void OnFixedUpdate()

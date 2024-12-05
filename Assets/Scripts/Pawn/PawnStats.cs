@@ -15,7 +15,7 @@ namespace WinterUniverse
         public int JumpCount = 1;
         public float AttackDamage = 10f;
         public float AttackPoise = 25f;
-        public float Health = 100f;
+        public float Health = 0f;
         public float HealthMax = 100f;
         public float HealthRegeneration = 1f;
         public float Poise = 0f;
@@ -35,7 +35,10 @@ namespace WinterUniverse
         public void Initialize()
         {
             _pawn = GetComponent<PawnController>();
-            OnHealthChanged?.Invoke(Health, HealthMax);
+            ResetPoise();
+            RestoreHealth(HealthMax);
+            _healthRegenerationTickTime = 0f;
+            _healthRegenerationDelayTime = 0f;
         }
 
         public void OnFixedUpdate()

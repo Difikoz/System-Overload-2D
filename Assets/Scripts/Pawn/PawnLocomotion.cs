@@ -38,6 +38,13 @@ namespace WinterUniverse
         {
             _pawn = GetComponent<PawnController>();
             _rb = GetComponent<Rigidbody2D>();
+            _movementVelocity = 0f;
+            _dashVelocity = 0f;
+            _fallVelocity = 0f;
+            _jumpTime = 0f;
+            _groundedTime = 0f;
+            _jumpCount = 0;
+            _rb.linearVelocity = Vector2.zero;
         }
 
         public void OnFixedUpdate()
