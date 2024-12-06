@@ -25,6 +25,16 @@ namespace WinterUniverse
             WaitForSeconds delay = new(_cooldown / 2f);
             while (true)
             {
+                for (int i = 0; i < _spawnCount; i++)
+                {
+                    if (_spawnedAI.Count - 1 == _maxCount)
+                    {
+                        break;
+                    }
+                    Spawn();
+                    yield return null;
+                }
+                yield return delay;
                 if (_spawnedAI.Count > 0)// remove corpses
                 {
                     for (int i = _spawnedAI.Count - 1; i >= 0; i--)
@@ -35,16 +45,6 @@ namespace WinterUniverse
                             _spawnedAI.RemoveAt(i);
                         }
                     }
-                }
-                yield return delay;
-                for (int i = 0; i < _spawnCount; i++)
-                {
-                    if (_spawnedAI.Count - 1 == _maxCount)
-                    {
-                        break;
-                    }
-                    Spawn();
-                    yield return null;
                 }
                 yield return delay;
             }

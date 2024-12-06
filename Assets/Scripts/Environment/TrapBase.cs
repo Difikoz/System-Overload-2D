@@ -21,9 +21,6 @@ namespace WinterUniverse
         private Coroutine _triggerCoroutine;
         private List<PawnController> _enteredTargets = new();
 
-        [Header("For Debug")]
-        [SerializeField] private bool _stayTriggerInProccess;
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (_triggerOnceOnEnter)
@@ -48,7 +45,6 @@ namespace WinterUniverse
                 }
                 if (_activateOnStay && _triggerCoroutine == null)
                 {
-                    _stayTriggerInProccess = true;
                     _triggerCoroutine = StartCoroutine(TriggerTimer());
                 }
             }
@@ -111,7 +107,6 @@ namespace WinterUniverse
                 }
                 yield return delay;
             }
-            _stayTriggerInProccess = false;
             _triggerCoroutine = null;
         }
     }

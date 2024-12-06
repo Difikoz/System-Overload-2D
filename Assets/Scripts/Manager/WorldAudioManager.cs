@@ -12,8 +12,11 @@ namespace WinterUniverse
         [SerializeField] private AudioSource _soundSource;
         [SerializeField] private float _ambientFadeSpeed = 0.5f;
         [SerializeField] private List<AudioClip> _ambientClips = new();
+        [SerializeField] private AudioClip _errorClip;
 
         private Coroutine _changeAmbientCoroutine;
+
+        public AudioClip ErrorClip => _errorClip;
 
         public void Initialize()
         {
@@ -35,15 +38,22 @@ namespace WinterUniverse
             _audioMixer.SetFloat("VolumeSound", value);
         }
 
-        public AudioClip ChooseRandomClip(List<AudioClip> clips)
+        public static AudioClip ChooseRandomClip(List<AudioClip> clips)
         {
+            if (clips == null || clips.Count == 0)
+            {
+                return null;
+            }
             return clips[Random.Range(0, clips.Count)];
         }
 
-        public void PlaySFX(AudioClip clip, bool randomizePitch = true, float volume = 1f, float minPitch = 0.9f, float maxPitch = 1.1f)
+        public void PlaySound(AudioClip clip, bool randomizePitch = true, float volume = 1f, float minPitch = 0.9f, float maxPitch = 1.1f)
         {
             if (clip == null)
             {
+                _soundSource.volume = 1f;
+                _soundSource.pitch = 1f;
+                _soundSource.PlayOneShot(_errorClip);
                 return;
             }
             _soundSource.volume = volume;

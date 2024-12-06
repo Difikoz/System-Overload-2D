@@ -27,9 +27,11 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
-            if (_pawn.IsAttacking && !_pawn.IsPerfomingAction)
+            if (_pawn.IsAttacking && !_pawn.IsPerfomingAction && _pawn.PawnStats.EnoughEnergy(_pawn.PawnStats.AttackEnergyCost))
             {
+                _pawn.PawnSound.PlayAttackClip();// there?
                 _pawn.PawnAnimator.PlayAction("Attack");
+                _pawn.PawnStats.ReduceEnergy(_pawn.PawnStats.AttackEnergyCost);
             }
         }
 

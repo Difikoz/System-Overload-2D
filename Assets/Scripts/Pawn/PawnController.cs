@@ -10,6 +10,7 @@ namespace WinterUniverse
         public string PawnName = "Faceless";
         public Vector2 MoveDirection;
         public bool IsGrounded;
+        public bool IsKnockbacked;
         public bool IsMoving;
         public bool IsDashing;
         public bool IsAttacking;
@@ -23,12 +24,14 @@ namespace WinterUniverse
         protected PawnAnimator _pawnAnimator;
         protected PawnCombat _pawnCombat;
         protected PawnLocomotion _pawnLocomotion;
+        protected PawnSound _pawnSound;
         protected PawnStats _pawnStats;
         protected PawnUI _pawnUI;
 
         public PawnAnimator PawnAnimator => _pawnAnimator;
         public PawnCombat PawnCombat => _pawnCombat;
         public PawnLocomotion PawnLocomotion => _pawnLocomotion;
+        public PawnSound PawnSound => _pawnSound;
         public PawnStats PawnStats => _pawnStats;
         public PawnUI PawnUI => _pawnUI;
 
@@ -43,6 +46,7 @@ namespace WinterUniverse
             _pawnAnimator = GetComponent<PawnAnimator>();
             _pawnCombat = GetComponent<PawnCombat>();
             _pawnLocomotion = GetComponent<PawnLocomotion>();
+            _pawnSound = GetComponent<PawnSound>();
             _pawnStats = GetComponent<PawnStats>();
             _pawnUI = GetComponentInChildren<PawnUI>();
         }
@@ -50,6 +54,7 @@ namespace WinterUniverse
         protected virtual void InitializeComponents()
         {
             IsGrounded = true;
+            IsKnockbacked = false;
             IsMoving = false;
             IsDashing = false;
             IsAttacking = false;
@@ -61,6 +66,7 @@ namespace WinterUniverse
             _pawnAnimator.Initialize();
             _pawnCombat.Initialize();
             _pawnLocomotion.Initialize();
+            _pawnSound.Initialize();
             _pawnStats.Initialize();
             _pawnUI.Initialize();
         }
@@ -105,6 +111,7 @@ namespace WinterUniverse
             _pawnStats.Health = 0f;
             _pawnStats.OnHealthChanged?.Invoke(_pawnStats.Health, _pawnStats.HealthMax);
             IsDead = true;
+            _pawnSound.PlayDeathClip();
             _pawnAnimator.PlayAction("Death");
             OnDied?.Invoke();
             PerformDeath();

@@ -85,7 +85,6 @@ namespace WinterUniverse
             }
             _initialized = false;
             _player.Despawn();
-            _audioManager.StopAmbient();
         }
     }
 }

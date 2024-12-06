@@ -33,6 +33,7 @@ namespace WinterUniverse
         [SerializeField] private float _groundedTime;
         [SerializeField] private float _dashTime;
         [SerializeField] private int _jumpCount;
+        [SerializeField] private Vector2 _knockbackVelocity;
 
         public void Initialize()
         {
@@ -45,18 +46,33 @@ namespace WinterUniverse
             _groundedTime = 0f;
             _jumpCount = 0;
             _rb.linearVelocity = Vector2.zero;
+            _rb.mass = _pawn.PawnStats.Mass;
         }
 
         public void OnFixedUpdate()
         {
+            HandleKnockback();
             HandleGravity();
             HandleMovement();
             HandleVelocity();
         }
 
+        private void HandleKnockback()
+        {
+            if (_knockbackVelocity != Vector2.zero)
+            {
+                _knockbackVelocity = Vector2.MoveTowards(_knockbackVelocity, Vector2.zero, _rb.mass * Time.fixedDeltaTime);
+                _pawn.IsKnockbacked = true;
+            }
+            else
+            {
+                _pawn.IsKnockbacked = false;
+            }
+        }
+
         private void HandleGravity()
         {
-            if (_pawn.CanJump && _jumpTime > 0f && _groundedTime > 0f)
+            if (_pawn.CanJump && !_pawn.IsKnockbacked && _jumpTime > 0f && _groundedTime > 0f && _pawn.PawnStats.EnoughEnergy(_pawn.PawnStats.JumpEnergyCost))
             {
                 ApplyJumpForce();
             }
@@ -72,6 +88,7 @@ namespace WinterUniverse
                 if (UnderRoof())
                 {
                     _fallVelocity = 0f;
+                    _knockbackVelocity.y = 0f;
                 }
                 _groundedTime -= Time.fixedDeltaTime;
                 if (_fallVelocity >= 0f)
@@ -119,22 +136,22 @@ namespace WinterUniverse
 
         private void HandleVelocity()
         {
-            _rb.linearVelocityX = _movementVelocity + _dashVelocity;
-            _rb.linearVelocityY = _fallVelocity;
+            _rb.linearVelocityX = _movementVelocity + _dashVelocity + _knockbackVelocity.x;
+            _rb.linearVelocityY = _fallVelocity + _knockbackVelocity.y;
         }
 
         private bool UnderRoof()
         {
-            return _fallVelocity > 0f && Physics2D.OverlapBox(_roofCheckPoint.position, _roofCheckSize, 0f, _roofMask);
+            return _rb.linearVelocityY > 0f && Physics2D.OverlapBox(_roofCheckPoint.position, _roofCheckSize, 0f, _roofMask);
         }
 
         private bool FacedToWall()
         {
-            if (_pawn.IsFacingRight && (_movementVelocity > 0f || _dashVelocity > 0f))
+            if (_pawn.IsFacingRight && _rb.linearVelocityX > 0f)
             {
                 return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, _wallMask);
             }
-            else if (!_pawn.IsFacingRight && (_movementVelocity < 0f || _dashVelocity < 0f))
+            else if (!_pawn.IsFacingRight && _rb.linearVelocityX < 0f)
             {
                 return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, _wallMask);
             }
@@ -143,7 +160,7 @@ namespace WinterUniverse
 
         public void StartJumping()
         {
-            if (!_pawn.CanJump || _jumpCount >= _pawn.PawnStats.JumpCount)
+            if (!_pawn.CanJump || _pawn.IsKnockbacked || _jumpCount >= _pawn.PawnStats.JumpCount)
             {
                 return;
             }
@@ -151,7 +168,7 @@ namespace WinterUniverse
             {
                 _jumpTime = _timeToJump;
             }
-            else
+            else if (_pawn.PawnStats.EnoughEnergy(_pawn.PawnStats.JumpEnergyCost))
             {
                 ApplyJumpForce();
             }
@@ -167,7 +184,7 @@ namespace WinterUniverse
 
         public void PerformDash()
         {
-            if (!_pawn.CanDash || Time.time < _dashTime + _dashCooldown)
+            if (!_pawn.CanDash || _pawn.IsKnockbacked || Time.time < _dashTime + _dashCooldown || !_pawn.PawnStats.EnoughEnergy(_pawn.PawnStats.DashEnergyCost))
             {
                 return;
             }
@@ -177,6 +194,13 @@ namespace WinterUniverse
             _dashVelocity = transform.localScale.x * _pawn.PawnStats.DashForce;
             _pawn.IsDashing = true;
             _pawn.PawnAnimator.PlayAction("Dash");
+            _pawn.PawnStats.ReduceEnergy(_pawn.PawnStats.DashEnergyCost);
+        }
+
+        public void AddKnockbackForce(Vector2 direction, float force)
+        {
+            _knockbackVelocity += direction.normalized * force;
+            _fallVelocity = 0f;
         }
 
         private void ApplyJumpForce()
@@ -185,6 +209,7 @@ namespace WinterUniverse
             _jumpTime = 0f;
             _groundedTime = 0f;
             _fallVelocity = _pawn.PawnStats.JumpForce;
+            _pawn.PawnStats.ReduceEnergy(_pawn.PawnStats.DashEnergyCost);
         }
 
         private void OnDrawGizmos()
