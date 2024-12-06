@@ -25,7 +25,16 @@ namespace WinterUniverse
             _hit = Physics2D.BoxCast(_interactionPoint.position, _interactionSize, 0f, transform.right, _interactionDistance, WorldManager.StaticInstance.LayerManager.InteractableMask);
             if (_hit.collider != null)
             {
-                if (_hit.collider.TryGetComponent(out InteractableBase interactable))
+                InteractableBase interactable = _hit.collider.GetComponentInParent<InteractableBase>();
+                if (interactable != null)
+                {
+                    if (interactable != _interactable)
+                    {
+                        _interactable = interactable;
+                        OnInteractableChanged?.Invoke(_interactable);
+                    }
+                }
+                else if (_hit.collider.TryGetComponent(out interactable))
                 {
                     if (interactable != _interactable)
                     {

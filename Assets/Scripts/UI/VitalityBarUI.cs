@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace WinterUniverse
 {
-    public class VitalityBar : MonoBehaviour
+    public class VitalityBarUI : MonoBehaviour
     {
         [SerializeField] private Image _backgroundFill;
         [SerializeField] private Image _foregroundFill;

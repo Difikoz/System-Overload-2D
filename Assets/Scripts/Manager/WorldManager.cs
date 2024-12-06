@@ -49,6 +49,8 @@ namespace WinterUniverse
             _timeManager.Initialize();
             _UIManager.Initialize();
             yield return null;
+            _timeManager.ForceUpdate();
+            yield return null;
             _initialized = true;
             _timeManager.UnpauseGame();
         }

@@ -36,5 +36,10 @@ namespace WinterUniverse
         {
             _pawnInteraction.Interact();
         }
+
+        public void OnStatus()
+        {
+            WorldManager.StaticInstance.UIManager.ToggleStatusMenu();
+        }
     }
 }

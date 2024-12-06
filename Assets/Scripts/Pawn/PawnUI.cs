@@ -6,8 +6,8 @@ namespace WinterUniverse
     public class PawnUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text _nameText;
-        [SerializeField] private VitalityBar _healthBar;
-        [SerializeField] private VitalityBar _energyBar;
+        [SerializeField] private VitalityBarUI _healthBar;
+        [SerializeField] private VitalityBarUI _energyBar;
 
         private PawnController _pawn;
         private Canvas _canvas;
