@@ -323,6 +323,37 @@ Transform:
   - {fileID: 7458338952653768109}
   m_Father: {fileID: 8154039360696928760}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3261470538916535541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9219301928476370982}
+  m_Layer: 2
+  m_Name: Interaction Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9219301928476370982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3261470538916535541}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8154039360696928760}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5366384958889470672
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +398,8 @@ GameObject:
   - component: {fileID: 8474556304630709360}
   - component: {fileID: 2354781233400671210}
   - component: {fileID: 1497802718331847095}
+  - component: {fileID: 7854265566672286200}
+  - component: {fileID: 1312017602256878829}
   - component: {fileID: 3982086066057891348}
   - component: {fileID: 2573129026005728832}
   - component: {fileID: 460302746413297386}
@@ -401,6 +434,7 @@ Transform:
   - {fileID: 2118966371955055436}
   - {fileID: 5731799915055261793}
   - {fileID: 470198884682115550}
+  - {fileID: 9219301928476370982}
   - {fileID: 5874363714308711541}
   - {fileID: 5001741803453331455}
   m_Father: {fileID: 0}
@@ -420,6 +454,7 @@ MonoBehaviour:
   PawnName: Faceless
   MoveDirection: {x: 0, y: 0}
   IsGrounded: 1
+  IsKnockbacked: 0
   IsMoving: 0
   IsDashing: 0
   IsAttacking: 0
@@ -456,11 +491,35 @@ MonoBehaviour:
   _attackEffect: {fileID: 564268148892817764}
   _attackPoint: {fileID: 5731799915055261793}
   _attackSize: {x: 0.75, y: 0.75}
-  _damageableMask:
-    serializedVersion: 2
-    m_Bits: 128
   _bloodSpawnPoint: {fileID: 470198884682115550}
   _bloodEffect: {fileID: 6941441794632265043, guid: 12753c8f85839e6408c39d1147a59fad, type: 3}
+--- !u!114 &7854265566672286200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044827310710620517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f8e227deedfd04e858afb247b4979b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionPoint: {fileID: 9219301928476370982}
+  _interactionSize: {x: 0.1, y: 0.95}
+  _interactionDistance: 0.5
+--- !u!114 &1312017602256878829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044827310710620517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797d5218b2501f346a48e1f09991f4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3982086066057891348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,19 +542,10 @@ MonoBehaviour:
   _fallGravityMultiplier: 4
   _groundCheckPoint: {fileID: 8892507304227829116}
   _groundCheckSize: {x: 0.4, y: 0.1}
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 65
   _wallCheckPoint: {fileID: 6224184964578745242}
   _wallCheckSize: {x: 0.1, y: 0.9}
-  _wallMask:
-    serializedVersion: 2
-    m_Bits: 65
   _roofCheckPoint: {fileID: 2118966371955055436}
   _roofCheckSize: {x: 0.4, y: 0.1}
-  _roofMask:
-    serializedVersion: 2
-    m_Bits: 65
   _movementVelocity: 0
   _dashVelocity: 0
   _fallVelocity: 0
@@ -503,6 +553,7 @@ MonoBehaviour:
   _groundedTime: 0
   _dashTime: 0
   _jumpCount: 0
+  _knockbackVelocity: {x: 0, y: 0}
 --- !u!114 &2573129026005728832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +588,7 @@ MonoBehaviour:
   Acceleration: 8
   Deceleration: 16
   MaxSpeed: 4
+  Mass: 80
   DashForce: 16
   JumpForce: 8
   JumpCount: 2

@@ -31,5 +31,10 @@ namespace WinterUniverse
         {
             IsAttacking = value.isPressed;
         }
+
+        public void OnInteract()
+        {
+            _pawnInteraction.Interact();
+        }
     }
 }

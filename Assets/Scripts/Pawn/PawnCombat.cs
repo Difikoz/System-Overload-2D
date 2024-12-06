@@ -8,7 +8,6 @@ namespace WinterUniverse
         [SerializeField] private GameObject _attackEffect;
         [SerializeField] private Transform _attackPoint;
         [SerializeField] private Vector2 _attackSize;
-        [SerializeField] private LayerMask _damageableMask;
         [SerializeField] private Transform _bloodSpawnPoint;
         [SerializeField] private GameObject _bloodEffect;
 
@@ -27,12 +26,13 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
-            if (_pawn.IsAttacking && !_pawn.IsPerfomingAction && _pawn.PawnStats.EnoughEnergy(_pawn.PawnStats.AttackEnergyCost))
+            if (!_pawn.IsAttacking || _pawn.IsPerfomingAction || !_pawn.PawnStats.EnoughEnergy(_pawn.PawnStats.AttackEnergyCost))
             {
-                _pawn.PawnSound.PlayAttackClip();// there?
-                _pawn.PawnAnimator.PlayAction("Attack");
-                _pawn.PawnStats.ReduceEnergy(_pawn.PawnStats.AttackEnergyCost);
+                return;
             }
+            _pawn.PawnSound.PlayAttackClip();// there?
+            _pawn.PawnAnimator.PlayAction("Attack");
+            _pawn.PawnStats.ReduceEnergy(_pawn.PawnStats.AttackEnergyCost);
         }
 
         public void SpawnBlood()
@@ -44,7 +44,7 @@ namespace WinterUniverse
         public void PerformAttack()// called from animation event (!!!)
         {
             _attackEffect.SetActive(true);
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(_attackPoint.position, _attackSize, 0f, _damageableMask);
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(_attackPoint.position, _attackSize, 0f, WorldManager.StaticInstance.LayerManager.DamageableMask);
             if (colliders.Length > 0)
             {
                 foreach (Collider2D collider in colliders)

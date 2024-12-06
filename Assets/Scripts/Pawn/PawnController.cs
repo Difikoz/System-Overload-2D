@@ -23,6 +23,8 @@ namespace WinterUniverse
 
         protected PawnAnimator _pawnAnimator;
         protected PawnCombat _pawnCombat;
+        protected PawnInteraction _pawnInteraction;
+        protected PawnInventory _pawnInventory;
         protected PawnLocomotion _pawnLocomotion;
         protected PawnSound _pawnSound;
         protected PawnStats _pawnStats;
@@ -30,6 +32,8 @@ namespace WinterUniverse
 
         public PawnAnimator PawnAnimator => _pawnAnimator;
         public PawnCombat PawnCombat => _pawnCombat;
+        public PawnInteraction PawnInteraction => _pawnInteraction;
+        public PawnInventory PawnInventory => _pawnInventory;
         public PawnLocomotion PawnLocomotion => _pawnLocomotion;
         public PawnSound PawnSound => _pawnSound;
         public PawnStats PawnStats => _pawnStats;
@@ -45,6 +49,8 @@ namespace WinterUniverse
         {
             _pawnAnimator = GetComponent<PawnAnimator>();
             _pawnCombat = GetComponent<PawnCombat>();
+            _pawnInteraction = GetComponent<PawnInteraction>();
+            _pawnInventory = GetComponent<PawnInventory>();
             _pawnLocomotion = GetComponent<PawnLocomotion>();
             _pawnSound = GetComponent<PawnSound>();
             _pawnStats = GetComponent<PawnStats>();
@@ -65,6 +71,8 @@ namespace WinterUniverse
             IsDead = false;
             _pawnAnimator.Initialize();
             _pawnCombat.Initialize();
+            _pawnInteraction.Initialize();
+            _pawnInventory.Initialize();
             _pawnLocomotion.Initialize();
             _pawnSound.Initialize();
             _pawnStats.Initialize();
@@ -82,6 +90,7 @@ namespace WinterUniverse
             _pawnAnimator.OnFixedUpdate();
             _pawnCombat.OnFixedUpdate();
             _pawnStats.OnFixedUpdate();
+            _pawnInteraction.OnFixedUpdate();
         }
 
         public void FlipRight()

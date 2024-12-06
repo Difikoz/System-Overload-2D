@@ -15,13 +15,10 @@ namespace WinterUniverse
         [SerializeField] private float _fallGravityMultiplier = 2f;
         [SerializeField] private Transform _groundCheckPoint;
         [SerializeField] private Vector2 _groundCheckSize;
-        [SerializeField] private LayerMask _groundMask;
         [SerializeField] private Transform _wallCheckPoint;
         [SerializeField] private Vector2 _wallCheckSize;
-        [SerializeField] private LayerMask _wallMask;
         [SerializeField] private Transform _roofCheckPoint;
         [SerializeField] private Vector2 _roofCheckSize;
-        [SerializeField] private LayerMask _roofMask;
 
         private PawnController _pawn;
         private Rigidbody2D _rb;
@@ -76,7 +73,7 @@ namespace WinterUniverse
             {
                 ApplyJumpForce();
             }
-            _pawn.IsGrounded = _fallVelocity <= 0f && Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0f, _groundMask);
+            _pawn.IsGrounded = _fallVelocity <= 0f && Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
             if (_pawn.IsGrounded)
             {
                 _groundedTime = _timeToFall;
@@ -142,18 +139,18 @@ namespace WinterUniverse
 
         private bool UnderRoof()
         {
-            return _rb.linearVelocityY > 0f && Physics2D.OverlapBox(_roofCheckPoint.position, _roofCheckSize, 0f, _roofMask);
+            return _rb.linearVelocityY > 0f && Physics2D.OverlapBox(_roofCheckPoint.position, _roofCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
         }
 
         private bool FacedToWall()
         {
             if (_pawn.IsFacingRight && _rb.linearVelocityX > 0f)
             {
-                return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, _wallMask);
+                return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
             }
             else if (!_pawn.IsFacingRight && _rb.linearVelocityX < 0f)
             {
-                return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, _wallMask);
+                return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
             }
             return false;
         }
