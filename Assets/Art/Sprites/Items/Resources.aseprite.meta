@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4a86759f2c5aa724e80501c3aa036c0b
+guid: a4893676797c6dd45be7ee8b341b7709
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Torch 001
+  - name: Stick
     originalName: 
-    pivot: {x: 0, y: 0.5}
+    pivot: {x: 0.33333334, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,18 +132,18 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 1
+      width: 3
       height: 4
-    spriteID: bf81ff61b35e04d4cbef7f6ad066eee8
+    spriteID: cc64a909f9b0e9248a324156666999f7
     spriteBone: []
     spriteOutline: []
     vertices: []
     spritePhysicsOutline:
     - outline:
-      - {x: 0.5, y: 2}
-      - {x: -0.5, y: 2}
-      - {x: -0.5, y: -2}
-      - {x: 0.5, y: -2}
+      - {x: 1.5, y: 2}
+      - {x: -1.5, y: 2}
+      - {x: -1.5, y: -2}
+      - {x: 1.5, y: -2}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -151,21 +151,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -484916933
-    name: Torch 001
+    guid: -1583429226
+    name: Stick
     layerFlags: 3
     layerType: 0
     blendMode: 0
     cells:
-    - name: Torch 001
+    - name: Stick
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 7
         y: 6
-        width: 1
+        width: 3
         height: 4
-      spriteId: bf81ff61b35e04d4cbef7f6ad066eee8
+      spriteId: cc64a909f9b0e9248a324156666999f7
     linkedCells: []
     parentIndex: -1
   platformSettings:

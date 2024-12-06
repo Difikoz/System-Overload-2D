@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 0.50980395, b: 0, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 0.1
-  m_LightVolumeEnabled: 1
+  m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: a350a2ab000000001f4e95bf25da42bf
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowsEnabled: 0
+  m_ShadowsEnabled: 1
   m_ShadowIntensity: 0.5
   m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5

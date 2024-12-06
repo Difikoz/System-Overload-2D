@@ -8,9 +8,9 @@ namespace WinterUniverse
     {
         [SerializeField] private GameObject _AIPrefab;
 
-        private List<SpawnerAI> _aiSpawners = new();
         private List<AIController> _spawnedAI = new();
         private List<AIController> _aiToDespawn = new();
+        private List<SpawnerAI> _spawners = new();
 
         public void Initialize()
         {
@@ -19,7 +19,7 @@ namespace WinterUniverse
             {
                 foreach (SpawnerAI spawner in spawners)
                 {
-                    _aiSpawners.Add(spawner);
+                    _spawners.Add(spawner);
                     spawner.Initialize();
                 }
             }
@@ -43,6 +43,10 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
+            foreach(SpawnerAI spawner in _spawners)
+            {
+                spawner.OnFixedUpdate();
+            }
             if (_aiToDespawn.Count > 0)
             {
                 for (int i = _aiToDespawn.Count - 1; i >= 0; i--)

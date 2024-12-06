@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 0
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638688617941458066
+  platformSettingsDirtyTick: 638691041686774888
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -138,7 +138,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -159,7 +164,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3.5}
+      - {x: -3, y: 3.5}
+      - {x: -3, y: -3.5}
+      - {x: 3, y: -3.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -180,7 +190,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -201,7 +216,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -222,7 +242,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3.5}
+      - {x: -3, y: 3.5}
+      - {x: -3, y: -3.5}
+      - {x: 3, y: -3.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -243,7 +268,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -264,7 +294,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -285,7 +320,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3.5}
+      - {x: -3, y: 3.5}
+      - {x: -3, y: -3.5}
+      - {x: 3, y: -3.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -306,7 +346,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -327,7 +372,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3.5}
+      - {x: -3, y: 3.5}
+      - {x: -3, y: -3.5}
+      - {x: 3, y: -3.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -348,7 +398,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3}
+      - {x: -3, y: 3}
+      - {x: -3, y: -3}
+      - {x: 3, y: -3}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -369,7 +424,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 2.5}
+      - {x: -3, y: 2.5}
+      - {x: -3, y: -2.5}
+      - {x: 3, y: -2.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -390,7 +450,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -411,7 +476,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3.5}
+      - {x: -3, y: 3.5}
+      - {x: -3, y: -3.5}
+      - {x: 3, y: -3.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -432,7 +502,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -453,7 +528,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -474,7 +554,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 3.5}
+      - {x: -3, y: 3.5}
+      - {x: -3, y: -3.5}
+      - {x: 3, y: -3.5}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -495,7 +580,12 @@ ScriptedImporter:
     spriteBone: []
     spriteOutline: []
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: 3, y: 4}
+      - {x: -3, y: 4}
+      - {x: -3, y: -4}
+      - {x: 3, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -767,7 +857,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  generatePhysicsShape: 0
+  generatePhysicsShape: 1
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 16, y: 16}

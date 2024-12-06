@@ -1,4 +1,5 @@
 using Lean.Pool;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace WinterUniverse
@@ -8,20 +9,17 @@ namespace WinterUniverse
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private PolygonCollider2D _collider;
-        [SerializeField] private ItemConfig _testItem;
 
         private ItemConfig _config;
-
-        private void Start()
-        {
-            Setup(_testItem);
-        }
+        private List<Vector2> _vertices = new();
 
         public void Setup(ItemConfig config)
         {
+            _vertices.Clear();
             _config = config;
             _spriteRenderer.sprite = _config.LootSprite;
-            _collider.SetPath(0, _spriteRenderer.sprite.vertices);
+            _spriteRenderer.sprite.GetPhysicsShape(0, _vertices);
+            _collider.SetPath(0, _vertices);
         }
 
         public override string GetText()

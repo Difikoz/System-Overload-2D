@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4a86759f2c5aa724e80501c3aa036c0b
+guid: 909a6b88a4c50ad4cb7323f13af5e97b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Torch 001
+  - name: Sword 001
     originalName: 
-    pivot: {x: 0, y: 0.5}
+    pivot: {x: 0.33333334, y: 0.25}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,18 +132,18 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 1
-      height: 4
-    spriteID: bf81ff61b35e04d4cbef7f6ad066eee8
+      width: 3
+      height: 8
+    spriteID: 17709aea1c672414f89a87114c869c21
     spriteBone: []
     spriteOutline: []
     vertices: []
     spritePhysicsOutline:
     - outline:
-      - {x: 0.5, y: 2}
-      - {x: -0.5, y: 2}
-      - {x: -0.5, y: -2}
-      - {x: 0.5, y: -2}
+      - {x: 1.5, y: 4}
+      - {x: -1.5, y: 4}
+      - {x: -1.5, y: -4}
+      - {x: 1.5, y: -4}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -151,21 +151,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -484916933
-    name: Torch 001
+    guid: -361324452
+    name: Sword 001
     layerFlags: 3
     layerType: 0
     blendMode: 0
     cells:
-    - name: Torch 001
+    - name: Sword 001
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 7
         y: 6
-        width: 1
-        height: 4
-      spriteId: bf81ff61b35e04d4cbef7f6ad066eee8
+        width: 3
+        height: 8
+      spriteId: 17709aea1c672414f89a87114c869c21
     linkedCells: []
     parentIndex: -1
   platformSettings:

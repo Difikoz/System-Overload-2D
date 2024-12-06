@@ -3,15 +3,16 @@ using UnityEngine;
 
 namespace WinterUniverse
 {
-    public class SpawnerAI : MonoBehaviour
+    public class SpawnerItem : MonoBehaviour
     {
+        [SerializeField] private List<ItemConfig> _items = new();
         [SerializeField] private List<Transform> _spawnPoints = new();
-        [SerializeField] private int _spawnCount = 2;
-        [SerializeField] private int _maxCount = 4;
+        [SerializeField] private int _spawnCount = 1;
+        [SerializeField] private int _maxCount = 2;
         [SerializeField] private float _spawnCooldown = 30f;
         [SerializeField] private float _clearCooldown = 10f;
 
-        private List<AIController> _spawnedAI = new();
+        private List<InteractableItem> _spawnedItems = new();
         private int _pointIndex;
         private float _spawnTime;
         private float _clearTime;
@@ -27,14 +28,13 @@ namespace WinterUniverse
             _clearTime += Time.fixedDeltaTime;
             if (_clearTime >= _clearCooldown)
             {
-                if (_spawnedAI.Count > 0)// remove corpses
+                if (_spawnedItems.Count > 0)// remove inactive
                 {
-                    for (int i = _spawnedAI.Count - 1; i >= 0; i--)
+                    for (int i = _spawnedItems.Count - 1; i >= 0; i--)
                     {
-                        if (_spawnedAI[i].IsDead)
+                        if (!_spawnedItems[i].isActiveAndEnabled)
                         {
-                            WorldManager.StaticInstance.AIManager.DespawnAI(_spawnedAI[i]);
-                            _spawnedAI.RemoveAt(i);
+                            _spawnedItems.RemoveAt(i);
                         }
                     }
                 }
@@ -46,7 +46,7 @@ namespace WinterUniverse
             {
                 for (int i = 0; i < _spawnCount; i++)
                 {
-                    if (_spawnedAI.Count - 1 == _maxCount)
+                    if (_spawnedItems.Count - 1 == _maxCount)
                     {
                         break;
                     }
@@ -58,7 +58,7 @@ namespace WinterUniverse
 
         private void Spawn()
         {
-            _spawnedAI.Add(WorldManager.StaticInstance.AIManager.SpawnAI(_spawnPoints[_pointIndex].position));
+            _spawnedItems.Add(WorldManager.StaticInstance.ItemManager.SpawnItem(_items[Random.Range(0, _items.Count)], _spawnPoints[_pointIndex].position));
             if (_pointIndex == _spawnPoints.Count - 1)
             {
                 _pointIndex = 0;

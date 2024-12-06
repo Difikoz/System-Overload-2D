@@ -4,6 +4,7 @@ namespace WinterUniverse
 {
     public abstract class ItemConfig : ScriptableObject
     {
+        [SerializeField, Range(0f, 1f)] protected float _chanceToSpawn = 0.5f;
         [SerializeField] protected string _displayName = "Name";
         [SerializeField, TextArea] protected string _description = "Description";
         [SerializeField] protected ItemType _itemType;

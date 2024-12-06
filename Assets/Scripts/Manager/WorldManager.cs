@@ -10,6 +10,7 @@ namespace WinterUniverse
         private WorldAIManager _AIManager;
         private WorldAudioManager _audioManager;
         private WorldCameraManager _cameraManager;
+        private WorldItemManager _itemManager;
         private WorldLayerManager _layerManager;
         private WorldTimeManager _timeManager;
         private WorldUIManager _UIManager;
@@ -18,6 +19,7 @@ namespace WinterUniverse
         public WorldAIManager AIManager => _AIManager;
         public WorldAudioManager AudioManager => _audioManager;
         public WorldCameraManager CameraManager => _cameraManager;
+        public WorldItemManager ItemManager => _itemManager;
         public WorldLayerManager LayerManager => _layerManager;
         public WorldTimeManager TimeManager => _timeManager;
         public WorldUIManager UIManager => _UIManager;
@@ -35,6 +37,7 @@ namespace WinterUniverse
             _AIManager = GetComponentInChildren<WorldAIManager>();
             _audioManager = GetComponentInChildren<WorldAudioManager>();
             _cameraManager = GetComponentInChildren<WorldCameraManager>();
+            _itemManager = GetComponentInChildren<WorldItemManager>();
             _layerManager = GetComponentInChildren<WorldLayerManager>();
             _timeManager = GetComponentInChildren<WorldTimeManager>();
             _UIManager = GetComponentInChildren<WorldUIManager>();
@@ -42,6 +45,7 @@ namespace WinterUniverse
             _player.Initialize();
             _AIManager.Initialize();
             _audioManager.Initialize();
+            _itemManager.Initialize();
             _timeManager.Initialize();
             _UIManager.Initialize();
             yield return null;
@@ -61,6 +65,7 @@ namespace WinterUniverse
             }
             _player.OnFixedUpdate();
             _AIManager.OnFixedUpdate();
+            _itemManager.OnFixedUpdate();
             _timeManager.OnFixedUpdate();
         }
 
@@ -84,6 +89,7 @@ namespace WinterUniverse
                 return;
             }
             _initialized = false;
+            _UIManager.OnDespawn();
             _player.Despawn();
         }
     }

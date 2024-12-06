@@ -53,6 +53,8 @@ namespace WinterUniverse
                 return;
             }
             _interactable.Interact(_pawn);
+            _interactable = null;
+            OnInteractableChanged?.Invoke(null);
         }
 
         private void OnDrawGizmos()
