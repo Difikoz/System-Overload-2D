@@ -7,12 +7,12 @@ namespace WinterUniverse
     {
         public void OnMove(InputValue value)
         {
-            MoveDirection = value.Get<Vector2>();
+            MoveDirection = InputEnabled ? value.Get<Vector2>() : Vector2.zero;
         }
 
         public void OnJump(InputValue value)
         {
-            if (value.isPressed)
+            if (value.isPressed && InputEnabled)
             {
                 _pawnLocomotion.StartJumping();
             }
@@ -24,16 +24,24 @@ namespace WinterUniverse
 
         public void OnDash()
         {
+            if (!InputEnabled)
+            {
+                return;
+            }
             _pawnLocomotion.PerformDash();
         }
 
         public void OnAttack(InputValue value)
         {
-            IsAttacking = value.isPressed;
+            IsAttacking = value.isPressed && InputEnabled;
         }
 
         public void OnInteract()
         {
+            if (!InputEnabled)
+            {
+                return;
+            }
             _pawnInteraction.Interact();
         }
 

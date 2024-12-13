@@ -43,7 +43,18 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
-            foreach(SpawnerAI spawner in _spawners)
+            if (_spawnedAI.Count > 0)
+            {
+                foreach (AIController ai in _spawnedAI)
+                {
+                    ai.OnFixedUpdate();
+                }
+            }
+            if (WorldManager.StaticInstance.TimeManager.Paused)
+            {
+                return;
+            }
+            foreach (SpawnerAI spawner in _spawners)
             {
                 spawner.OnFixedUpdate();
             }
@@ -54,13 +65,6 @@ namespace WinterUniverse
                     _spawnedAI.Remove(_aiToDespawn[i]);
                     _aiToDespawn[i].Despawn();
                     _aiToDespawn.RemoveAt(i);
-                }
-            }
-            if (_spawnedAI.Count > 0)
-            {
-                foreach (AIController ai in _spawnedAI)
-                {
-                    ai.OnFixedUpdate();
                 }
             }
         }

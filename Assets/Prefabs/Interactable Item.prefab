@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6585362476063001724}
   - component: {fileID: 668531239248496918}
   m_Layer: 6
-  m_Name: Item Loot
+  m_Name: Interactable Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcdbde50c0652564688af2c278cf93b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactableTextBase: Pickup
   _interactionPoint: {fileID: 0}
+  _isInteractiveForAI: 1
   _rb: {fileID: 4496171150726115612}
   _spriteRenderer: {fileID: 6585362476063001724}
   _collider: {fileID: 668531239248496918}

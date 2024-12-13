@@ -55,6 +55,10 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
+            if (_paused)
+            {
+                return;
+            }
             _second += TimeScale * _timeScaleMultiplier * Time.fixedDeltaTime;
             if (_second >= _secondsInMinute)
             {
@@ -67,7 +71,7 @@ namespace WinterUniverse
         private void UpdateSun()
         {
             _currentSeccodsInDay = _hour * _minutesInHour * _secondsInMinute + _minute * _secondsInMinute + _second;
-            Debug.Log($"{_currentSeccodsInDay}/{_maxSecondsInDay}");
+            //Debug.Log($"{_currentSeccodsInDay}/{_maxSecondsInDay}");
             _sun.color = _sunGradient.Evaluate(_currentSeccodsInDay / _maxSecondsInDay);
         }
 

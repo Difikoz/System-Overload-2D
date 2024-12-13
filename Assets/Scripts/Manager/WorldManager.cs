@@ -61,10 +61,6 @@ namespace WinterUniverse
             {
                 return;
             }
-            if (_timeManager.Paused)
-            {
-                return;
-            }
             _player.OnFixedUpdate();
             _AIManager.OnFixedUpdate();
             _itemManager.OnFixedUpdate();

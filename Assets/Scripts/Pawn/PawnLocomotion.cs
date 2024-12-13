@@ -31,6 +31,7 @@ namespace WinterUniverse
         [SerializeField] private float _dashTime;
         [SerializeField] private int _jumpCount;
         [SerializeField] private Vector2 _knockbackVelocity;
+        [SerializeField] private Vector2 _linearVelocity;
 
         public void Initialize()
         {
@@ -48,6 +49,12 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
+            if (!_pawn.InputEnabled)
+            {
+                _rb.linearVelocityX = 0f;
+                _rb.linearVelocityY = 0f;
+                return;
+            }
             HandleKnockback();
             HandleGravity();
             HandleMovement();
@@ -133,22 +140,24 @@ namespace WinterUniverse
 
         private void HandleVelocity()
         {
-            _rb.linearVelocityX = _movementVelocity + _dashVelocity + _knockbackVelocity.x;
-            _rb.linearVelocityY = _fallVelocity + _knockbackVelocity.y;
+            _linearVelocity.x = _movementVelocity + _dashVelocity + _knockbackVelocity.x;
+            _linearVelocity.y = _fallVelocity + _knockbackVelocity.y;
+            _rb.linearVelocityX = _linearVelocity.x;
+            _rb.linearVelocityY = _linearVelocity.y;
         }
 
         private bool UnderRoof()
         {
-            return _rb.linearVelocityY > 0f && Physics2D.OverlapBox(_roofCheckPoint.position, _roofCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
+            return _linearVelocity.y > 0f && Physics2D.OverlapBox(_roofCheckPoint.position, _roofCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
         }
 
         private bool FacedToWall()
         {
-            if (_pawn.IsFacingRight && _rb.linearVelocityX > 0f)
+            if (_pawn.IsFacingRight && _linearVelocity.x > 0f)
             {
                 return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
             }
-            else if (!_pawn.IsFacingRight && _rb.linearVelocityX < 0f)
+            else if (!_pawn.IsFacingRight && _linearVelocity.x < 0f)
             {
                 return Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0f, WorldManager.StaticInstance.LayerManager.ObstacleMask);
             }

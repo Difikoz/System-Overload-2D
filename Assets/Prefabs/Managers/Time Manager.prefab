@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000a350a2ab1f4e95bfff4e6d98
+  m_ApplyToSortingLayers: a350a2ab000000001f4e95bf25da42bfff4e6d98
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 6
     m_NumAlphaKeys: 2
-  _timeScaleMultiplier: 600
+  _timeScaleMultiplier: 100
   _timeScale: 1
   _secondsInMinute: 60
   _minutesInHour: 60

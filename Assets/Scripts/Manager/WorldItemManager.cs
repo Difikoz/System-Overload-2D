@@ -48,7 +48,11 @@ namespace WinterUniverse
 
         public void OnFixedUpdate()
         {
-            foreach(SpawnerItem spawner in _spawners)
+            if (WorldManager.StaticInstance.TimeManager.Paused)
+            {
+                return;
+            }
+            foreach (SpawnerItem spawner in _spawners)
             {
                 spawner.OnFixedUpdate();
             }

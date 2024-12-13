@@ -4,14 +4,17 @@ namespace WinterUniverse
 {
     public class WorldUIManager : MonoBehaviour
     {
+        private FadeScreenUI _fadeScreen;
         private StatusMenuUI _statusMenu;
         private TimeOfDayBarUI _timeOfDay;
         private InteractableBarUI _interactableBar;
 
+        public FadeScreenUI FadeScreen => _fadeScreen;
         public StatusMenuUI StatusMenu => _statusMenu;
 
         public void Initialize()
         {
+            _fadeScreen = GetComponentInChildren<FadeScreenUI>();
             _statusMenu = GetComponentInChildren<StatusMenuUI>();
             _timeOfDay = GetComponentInChildren<TimeOfDayBarUI>();
             _interactableBar = GetComponentInChildren<InteractableBarUI>();
@@ -41,14 +44,14 @@ namespace WinterUniverse
 
         private void OpenStatusMenu()
         {
-            //WorldManager.StaticInstance.TimeManager.PauseGame();
             _statusMenu.gameObject.SetActive(true);
+            WorldManager.StaticInstance.TimeManager.PauseGame();
         }
 
         private void CloseStatusMenu()
         {
+            WorldManager.StaticInstance.TimeManager.UnpauseGame();
             _statusMenu.gameObject.SetActive(false);
-            //WorldManager.StaticInstance.TimeManager.UnpauseGame();
         }
     }
 }

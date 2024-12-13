@@ -26,7 +26,7 @@ namespace WinterUniverse
 
         public override string GetText()
         {
-            return $"Pickup [{_item.DisplayName}]";
+            return $"{_interactableTextBase} [{_item.DisplayName}]";
         }
 
         public override void Interact(PawnController pawn)

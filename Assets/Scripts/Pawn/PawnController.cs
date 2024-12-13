@@ -7,6 +7,7 @@ namespace WinterUniverse
     {
         public Action OnDied;
 
+        public bool InputEnabled;
         public string PawnName = "Faceless";
         public Vector2 MoveDirection;
         public bool IsGrounded;
@@ -43,6 +44,7 @@ namespace WinterUniverse
         {
             GetComponents();
             InitializeComponents();
+            EventBus.OnGamePaused += OnGamePaused;
         }
 
         protected virtual void GetComponents()
@@ -82,11 +84,16 @@ namespace WinterUniverse
         public virtual void Despawn()
         {
             _pawnUI.OnDespawn();
+            EventBus.OnGamePaused -= OnGamePaused;
         }
 
         public virtual void OnFixedUpdate()
         {
             _pawnLocomotion.OnFixedUpdate();
+            if (!InputEnabled)
+            {
+                return;
+            }
             _pawnAnimator.OnFixedUpdate();
             _pawnCombat.OnFixedUpdate();
             _pawnStats.OnFixedUpdate();
@@ -129,6 +136,18 @@ namespace WinterUniverse
         protected virtual void PerformDeath()
         {
 
+        }
+
+        private void OnGamePaused(bool paused)
+        {
+            if (paused)
+            {
+                InputEnabled = false;
+            }
+            else
+            {
+                InputEnabled = true;
+            }
         }
     }
 }
