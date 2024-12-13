@@ -9,6 +9,7 @@ namespace WinterUniverse
 
         [SerializeField] private Light2D _sun;
         [SerializeField] private Gradient _sunGradient;
+        [SerializeField] private AnimationCurve _sunIntensity;
         [SerializeField] private float _timeScaleMultiplier = 600f;
         [SerializeField] private float _timeScale = 1f;
 
@@ -44,7 +45,7 @@ namespace WinterUniverse
 
         public void Initialize()
         {
-            _maxSecondsInDay = _hoursInDay * _minutesInHour * _secondsInMinute + _minute * _secondsInMinute;
+            _maxSecondsInDay = _hoursInDay * _minutesInHour * _secondsInMinute;
             _minute = _startingMinute;
             _hour = _startingHour;
             _day = _startingDay;
@@ -60,7 +61,7 @@ namespace WinterUniverse
                 return;
             }
             _second += TimeScale * _timeScaleMultiplier * Time.fixedDeltaTime;
-            if (_second >= _secondsInMinute)
+            while (_second >= _secondsInMinute)
             {
                 _second -= _secondsInMinute;
                 AddMinute();
@@ -73,6 +74,7 @@ namespace WinterUniverse
             _currentSeccodsInDay = _hour * _minutesInHour * _secondsInMinute + _minute * _secondsInMinute + _second;
             //Debug.Log($"{_currentSeccodsInDay}/{_maxSecondsInDay}");
             _sun.color = _sunGradient.Evaluate(_currentSeccodsInDay / _maxSecondsInDay);
+            _sun.intensity = _sunIntensity.Evaluate(_currentSeccodsInDay / _maxSecondsInDay);
         }
 
         public void ForceUpdate()
